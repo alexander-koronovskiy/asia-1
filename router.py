@@ -1,4 +1,4 @@
-from db import add_item
+from db import add_item, show_items
 
 
 def parse_to_add(message):
@@ -7,3 +7,7 @@ def parse_to_add(message):
     description = description.strip()
     price = float(price.strip())
     add_item(name, description, price)
+
+
+def show_all():
+    return show_items()

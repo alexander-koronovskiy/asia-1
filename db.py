@@ -28,3 +28,8 @@ def add_item(name, description, price: float):
     session.add(new_product)
     session.commit()
     session.close()
+
+# Добавление нового товара
+def show_items():
+    products = session.query(Product).all()
+    return [[product.id, product.name, product.description, product.price] for product in products]
