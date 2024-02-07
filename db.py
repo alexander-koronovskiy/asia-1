@@ -6,6 +6,14 @@ from sqlalchemy.ext.declarative import declarative_base
 engine = create_engine('sqlite:///shop.db', echo=True)
 Base = declarative_base()
 
+# Создание таблицы
+Base.metadata.create_all(engine)
+
+# Создание сессии
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
 # Определение структуры таблицы
 class Product(Base):
     __tablename__ = 'products'
@@ -14,17 +22,9 @@ class Product(Base):
     description = Column(String)
     price = Column(Float)
 
-# Создание таблицы
-Base.metadata.create_all(engine)
-
-# Создание сессии
-Session = sessionmaker(bind=engine)
-session = Session()
-
 # Добавление нового товара
-new_product = Product(name='товар', description='описание товара', price=10.99)
-session.add(new_product)
-session.commit()
-
-# Закрытие сессии
-session.close()
+def add_item(name, description, price: float):
+    new_product = Product(name=name, description = description, price = price)
+    session.add(new_product)
+    session.commit()
+    session.close()
